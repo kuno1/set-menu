@@ -1,0 +1,16 @@
+{
+    "name": "kunoichi/set-menu",
+    "description": "Cache ready nav-menu for WordPress",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^5.6|^7.0",
+        "hametuha/singleton-pattern": "^1.1"
+    },
+    "autoload": {
+        "psr-0": {
+            "Kunoichi\\SetMenu": "src"
+        }
+    }
+}
