@@ -20,6 +20,10 @@ final class SetMenu {
 	final private function __construct() {
 		AdminDisplay::get_instance();
 		CacheController::get_instance();
+		$mo = dirname( dirname( __DIR__ ) ) . '/languages/set-menu-' . get_locale() . '.mo';
+		if ( file_exists( $mo ) ) {
+			load_textdomain( 'set-menu', $mo );
+		}
 	}
 
 	/**
@@ -37,7 +41,17 @@ final class SetMenu {
 	 * @param array $args
 	 * @return string|false|void
 	 */
-	public static function render( $args = [] ) {
+	public static function nav_menu( $args = [] ) {
 		return CacheController::get_instance()->render_menu( $args );
+	}
+
+	/**
+	 * Equivalent to dynamic_sidebar but cached.
+	 *
+	 * @param string $id
+	 * @return bool
+	 */
+	public static function sidebar( $id ) {
+		return CacheController::get_instance()->render_sidebar( $id );
 	}
 }

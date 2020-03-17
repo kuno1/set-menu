@@ -17,7 +17,6 @@ class AdminDisplay extends Singleton {
 	 * Constructor.
 	 */
 	protected function init() {
-		add_action( 'wp_update_nav_menu', [ $this, 'save_menu' ], 10, 2 );
 		add_action( 'admin_menu', [ $this, 'admin_menu' ] );
 		add_action( 'admin_init', [ $this, 'register_setting' ] );
 	}
@@ -80,7 +79,62 @@ class AdminDisplay extends Singleton {
 
 		register_setting( 'set-menu-setting', 'locations-to-ignore' );
 		register_setting( 'set-menu-setting', 'menu-lifetime' );
-    }
+
+
+		add_settings_section(
+			'set-menu-widgets',
+			__( 'Widgets Caching', 'set-menu' ),
+			function() {
+				printf( '<p class="description">%s</p>', esc_html__( 'You can explicitly cache widgets in sidebars', 'set-menu' ) );
+			},
+			'set-menu-setting'
+		);
+
+		add_settings_field(
+			'set-menu-widgets-to-cache',
+			__( 'Cached Sidebars', 'set-menu' ),
+			function() {
+			    global $wp_registered_sidebars;
+				if ( empty( $wp_registered_sidebars ) ) : ?>
+                    <p class="description">
+						<?php esc_html_e( 'This theme has no sidebars', 'set-menu' );?>
+                    </p>
+				<?php else : ?>
+                    <p>
+						<?php foreach ( $wp_registered_sidebars as $id => $sidebar ) : ?>
+                            <label style="display: inline-block; margin: 0 20px 10px 0;">
+                                <input name="set-menu-widgets-to-cache[]" type="checkbox" value="<?php echo esc_attr( $id ) ?>" <?php checked( $this->sidebar_should_be_cached( $id ) ) ?> />
+								<?php echo esc_html( $sidebar['name'] ) ?>
+                            </label>
+						<?php endforeach; ?>
+                    </p>
+                    <p class="description">
+						<?php esc_html_e( 'If whole sidebar will be cached. Do not check if one contains dynamic widget(e.g. Cart, login profile)', 'set-menu' );?>
+                    </p>
+				<?php endif;
+			},
+			'set-menu-setting',
+			'set-menu-widgets'
+		);
+
+		add_settings_field(
+			'sidebar-lifetime',
+			__( 'Cache Lifetime', 'set-menu' ),
+			function() {
+				?>
+                <input type="number" class="regular-text" value="<?php echo esc_attr( $this->sidebar_cache_lifetime() ) ?>" name="sidebar-lifetime" id="sidebar-lifetime" />
+                <p class="description">
+					<?php esc_html_e( 'Cache life time in minutes.', 'set-menu' ) ?>
+                </p>
+				<?php
+			},
+			'set-menu-setting',
+			'set-menu-widgets'
+		);
+
+		register_setting( 'set-menu-setting', 'set-menu-widgets-to-cache' );
+		register_setting( 'set-menu-setting', 'sidebar-lifetime' );
+	}
 
 	/**
 	 * Add menu page.
@@ -102,14 +156,4 @@ class AdminDisplay extends Singleton {
 			<?php
 		} );
 	}
-
-	/**
-     * Update nav menu.
-     *
-	 * @param int   $menu_id
-	 * @param array $menu_data
-	 */
-	public function save_menu( $menu_id, $menu_data = [] ) {
-	    $this->flush_menu_cache();
-    }
 }

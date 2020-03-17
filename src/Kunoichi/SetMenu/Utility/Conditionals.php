@@ -48,11 +48,36 @@ trait Conditionals {
 	 *
 	 * @return int
 	 */
-	protected function menu_cache_lifetime () {
+	protected function menu_cache_lifetime() {
 		return max( 1, (int) get_option( 'menu-lifetime', 60 ) );
 	}
 
-	public function save_location( $theme_location ) {
+	/**
+	 * Detect if sidebar should be cached.
+	 *
+	 * @param string $sidebar_id
+	 * @return bool
+	 */
+	protected function sidebar_should_be_cached( $sidebar_id ) {
+		return in_array( $sidebar_id, get_option( 'set-menu-widgets-to-cache', [] ) );
+	}
 
+	/**
+	 * Sidebar lifetime.
+	 *
+	 * @return int
+	 */
+	protected function sidebar_cache_lifetime() {
+		return max( 1, (int) get_option( 'sidebar-lifetime', 60 ) );
+	}
+
+	/**
+	 * Get sidebar cache key.
+	 *
+	 * @param string $id
+	 * @return string
+	 */
+	protected function sidebar_cache_key( $id ) {
+		return sprintf( 'sidebar_cache_%s', $id );
 	}
 }
