@@ -59,7 +59,8 @@ trait Conditionals {
 	 * @return bool
 	 */
 	protected function sidebar_should_be_cached( $sidebar_id ) {
-		return in_array( $sidebar_id, get_option( 'set-menu-widgets-to-cache', [] ) );
+		$sidebar_ids = array_filter( (array) get_option( 'set-menu-widgets-to-cache', [] ) );
+		return in_array( $sidebar_id, $sidebar_ids );
 	}
 
 	/**

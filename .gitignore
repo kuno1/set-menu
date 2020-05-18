@@ -1,2 +1,4 @@
 /vendor/
 composer.lock
+/wp/
+/node_modules/

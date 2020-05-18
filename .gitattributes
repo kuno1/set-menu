@@ -8,6 +8,7 @@
 /.git export-ignore
 /.gitignore export-ignore
 /.gitignore export-ignore
+/.wp-env.json export-ignore
 /bin export-ignore
 /composer.lock export-ignore
 /phpunit.xml.dist export-ignore
