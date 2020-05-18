@@ -2,3 +2,4 @@
 composer.lock
 /wp/
 /node_modules/
+package-lock.json
