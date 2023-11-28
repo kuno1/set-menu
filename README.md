@@ -28,7 +28,7 @@ Replace yoru `wp_nav_menu` to `Kunoich\SetMenu::nav_menu`.
 Checking with `has_nav_mehu` is recommended.
 
 ```php
-if ( has_nav_menu( 'header'  ) {
+if ( has_nav_menu( 'header'  ) ) {
 	Kunoichi\SetMenu::nav_menu( [
 		'container'      => false,
 		'menu_class'     => 'footer-social-menu',
