@@ -49,7 +49,13 @@ trait Conditionals {
 	 * @return int
 	 */
 	protected function menu_cache_lifetime() {
-		return max( 1, (int) get_option( 'menu-lifetime', 60 ) );
+		/**
+		 * Filter the default value of menu cache lifetime.
+		 *
+		 * @param int $lifetime Minutes. Default value is 60.
+		 */
+		$default_menu_lifetime = (int) apply_filters( 'set_menu_default_menu_lifetime', 60 );
+		return max( 1, (int) get_option( 'menu-lifetime', $default_menu_lifetime ) );
 	}
 
 	/**
@@ -69,7 +75,13 @@ trait Conditionals {
 	 * @return int
 	 */
 	protected function sidebar_cache_lifetime() {
-		return max( 1, (int) get_option( 'sidebar-lifetime', 60 ) );
+		/**
+		 * Filter the default value of sidebar cache lifetime.
+		 *
+		 * @param int $lifetime Minutes. Default value is 60.
+		 */
+		$default_sidebar_lifetime = (int) apply_filters( 'set_menu_default_sidebar_lifetime', 60 );
+		return max( 1, (int) get_option( 'sidebar-lifetime', $default_sidebar_lifetime ) );
 	}
 
 	/**
