@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.0",
-        "hametuha/singleton-pattern": "^1.1"
+        "hametuha/singleton-pattern": "^1.2"
     },
     "autoload": {
         "psr-0": {
